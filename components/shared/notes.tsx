@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 interface Note {
   _id: string;
   text: string;
+  owner: string;
 }
 
 const Notes = () => {
