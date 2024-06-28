@@ -5,8 +5,14 @@ import { useEffect, useState } from "react";
 import Note from "./note";
 import { Skeleton } from "@/components/ui/skeleton";
 
+// Define the Note type
+interface Note {
+  _id: string;
+  text: string;
+}
+
 const Notes = () => {
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState<Note[]>([]);
   const [loading, setLoading] = useState(true);
   const { data: session } = useSession();
 
@@ -18,7 +24,7 @@ const Notes = () => {
     }
 
     try {
-      const res = await fetch(`/api/users/${session.user.id}/posts`, {
+      const res = await fetch(`/api/users/${session.user.id}/notes`, {
         method: "GET",
       });
 

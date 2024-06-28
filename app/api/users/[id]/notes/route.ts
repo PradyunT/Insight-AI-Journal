@@ -1,8 +1,15 @@
-import type { NextApiRequest } from "next";
 import { connectToDB } from "@/utils/database";
 import Note from "@/models/note";
 
-export const GET = async (req: NextApiRequest, { params }) => {
+interface Params {
+  id: string;
+}
+
+interface Context {
+  params: Params;
+}
+
+export const GET = async (req: Request, { params }: Context) => {
   try {
     await connectToDB();
 

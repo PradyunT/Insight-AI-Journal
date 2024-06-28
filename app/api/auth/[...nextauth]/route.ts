@@ -33,8 +33,8 @@ const handler = NextAuth({
       try {
         await connectToDB();
 
-        if (!profile) {
-          console.error("Google profile is undefined");
+        if (!profile || !profile.name) {
+          console.error("Google profile or required profile fields are undefined");
           return false;
         }
 
