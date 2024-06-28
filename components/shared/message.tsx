@@ -1,16 +1,20 @@
 "use client";
 
 import formatTime from "@/utils/formatTime";
-import { Bot, User, Copy } from "lucide-react";
+import { Bot, User, Copy, BookMarked } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { useSession } from "next-auth/react";
+import IconButton from "./iconButton";
 
 interface MessageProps {
+  id: string;
   time: Date;
   role: string;
   message: string;
 }
 
 const Message = ({ time, role, message }: MessageProps) => {
+  const { data: session } = useSession();
   const { toast } = useToast();
 
   const handleCopy = () => {
@@ -19,6 +23,31 @@ const Message = ({ time, role, message }: MessageProps) => {
         title: "Copied to Clipboard 📋",
       });
     });
+  };
+
+  const handleSaveNote = async (text: string) => {
+    if (!session) {
+      toast({ title: "Sign in to save notes", description: "You must be signed in to use journal features" });
+    }
+
+    try {
+      const res = await fetch("/api/note/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          text,
+          owner: session?.user.id,
+        }),
+      });
+
+      if (res.status == 200) {
+        toast({ title: "Saved note successfully 📝", description: "See your saved notes in the journal" });
+      }
+    } catch (error) {
+      console.error("Error during API call:", error);
+    }
   };
 
   return (
@@ -36,13 +65,12 @@ const Message = ({ time, role, message }: MessageProps) => {
         <div className="flex items-center">
           <small>{formatTime(time)}</small>
           <div className="flex-1" />
-          <div
-            className={`p-1.5 rounded-full ${
-              role === "USER" ? "hover:bg-blue-300" : "hover:bg-gray-200"
-            } transition-colors cursor-pointer`}
-            onClick={handleCopy}>
-            <Copy size={16} />
-          </div>
+          <IconButton icon={Copy} onClick={handleCopy} className={role === "USER" ? "hover:bg-blue-300" : "hover:bg-gray-200"} />
+          <IconButton
+            icon={BookMarked}
+            onClick={() => handleSaveNote(message)}
+            className={role === "USER" ? "hover:bg-blue-300" : "hover:bg-gray-200"}
+          />
         </div>
       </div>
       {role === "USER" && (

@@ -10,6 +10,11 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
+import Link from "next/link";
+import InspirationDialog from "./inspirationDialog";
+import { useSession } from "next-auth/react";
+
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const formSchema = z.object({
   text: z.string().min(2).max(999),
@@ -17,6 +22,7 @@ const formSchema = z.object({
 
 const ChatInterface = () => {
   const { addMessage, resetConversation, updateMessage, appendToMessage } = useConversation();
+  const { data: session } = useSession();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -26,8 +32,6 @@ const ChatInterface = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log("Submitted values:", values);
-
     // Generate a unique ID for the user's message
     const userMessageId = uuidv4();
 
@@ -84,6 +88,11 @@ const ChatInterface = () => {
     }
   };
 
+  // For use to handle copying inspiration dialog prompts
+  const handlePromptSelect = (prompt: string) => {
+    form.setValue("text", prompt);
+  };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -113,15 +122,27 @@ const ChatInterface = () => {
             Send
             <Send className="ml-2" size={20} />
           </Button>
+          <InspirationDialog onSelectPrompt={handlePromptSelect} />
           <div className="flex-1" />
           <Button variant="destructive" onClick={resetConversation} type="button">
             Reset
             <RotateCcw className="ml-2" size={20} />
           </Button>
-          <Button variant={"outline"} type="button">
-            Switch to Journal
-            <ArrowRightLeft className="ml-2" size={20} />
-          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant={"outline"} type="button" disabled={!session}>
+                  <Link href="/journal" className="flex">
+                    Switch to Journal
+                    <ArrowRightLeft className="ml-2" size={20} />
+                  </Link>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Switch to journal. You must be signed in.</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </form>
     </Form>

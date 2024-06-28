@@ -32,6 +32,12 @@ const handler = NextAuth({
     async signIn({ profile }) {
       try {
         await connectToDB();
+
+        if (!profile) {
+          console.error("Google profile is undefined");
+          return false;
+        }
+
         // Check if user exists
         const userExists = await User.findOne({ email: profile.email });
         // If not, create a new user

@@ -14,13 +14,7 @@ export const metadata: Metadata = {
   description: "Smart mental health journal powered by AI",
 };
 
-export default function RootLayout({
-  children,
-  session,
-}: Readonly<{
-  children: React.ReactNode;
-  session: DefaultSession;
-}>) {
+export default function RootLayout({ children, session }: { children: React.ReactNode; session: DefaultSession }) {
   return (
     <html lang="en">
       <body className={`${inter.className} flex flex-col min-h-screen`}>

@@ -32,7 +32,6 @@ export const POST = async (req: Request) => {
         // Generate a streaming response
         for await (const message of chatStream) {
           if (message.eventType === "text-generation") {
-            console.log(message);
             controller.enqueue(encoder.encode(`${message.text}`));
           }
         }
@@ -48,8 +47,8 @@ export const POST = async (req: Request) => {
         "Content-Type": "text/event-stream; charset=utf-8",
       },
     });
-  } catch (error) {
-    console.error("Error in API route:", error);
+  } catch (err) {
+    console.error("Error in API route:", err);
     return new Response(JSON.stringify({ error: "Internal Server Error" }), { status: 500 });
   }
 };

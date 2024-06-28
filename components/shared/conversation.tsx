@@ -25,7 +25,7 @@ const Conversation = () => {
     <ScrollArea viewportRef={viewportRef} className="h-[57vh] rounded-md border">
       <div className="space-y-4 py-4 flex flex-col">
         {conversation.map((message) => (
-          <Message key={message.id} time={message.Time} role={message.Role} message={message.Message} />
+          <Message key={message.id} id={message.id} time={message.Time} role={message.Role} message={message.Message} />
         ))}
       </div>
     </ScrollArea>
