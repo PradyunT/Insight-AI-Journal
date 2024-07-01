@@ -4,16 +4,10 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Note from "./note";
 import { Skeleton } from "@/components/ui/skeleton";
-
-// Define the Note type
-interface Note {
-  _id: string;
-  text: string;
-  owner: string;
-}
+import type { Note as Notetype } from "@/types/customTypes";
 
 const Notes = () => {
-  const [notes, setNotes] = useState<Note[]>([]);
+  const [notes, setNotes] = useState<Notetype[]>([]);
   const [loading, setLoading] = useState(true);
   const { data: session } = useSession();
 
@@ -48,7 +42,7 @@ const Notes = () => {
   }, [session]);
 
   return (
-    <div className="flex flex-wrap gap-4">
+    <div className="flex flex-col gap-4 w-[200px">
       {loading ? (
         <Skeleton className="h-[125px] w-[100%] rounded-xl" />
       ) : (

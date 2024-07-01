@@ -1,4 +1,4 @@
-import Note from "@/models/note";
+import Journal from "@/models/journal";
 import { connectToDB } from "@/utils/database";
 
 export const POST = async (req: Request) => {
@@ -7,12 +7,12 @@ export const POST = async (req: Request) => {
     const { text, owner } = data;
     await connectToDB();
 
-    const newNote = await new Note({
+    const newJournal = await new Journal({
       text,
       owner,
     });
 
-    await newNote.save();
+    await newJournal.save();
 
     return new Response(JSON.stringify({ status: 200 }));
   } catch (err) {
@@ -24,16 +24,17 @@ export const POST = async (req: Request) => {
 export const PATCH = async (req: Request) => {
   try {
     const data = await req.json();
-    const { id, newText } = data;
+    const { id, text } = data;
     await connectToDB();
 
-    const updateNote = await Note.findByIdAndUpdate(id, { $set: { text: newText } });
+    const editJournal = await Journal.findById(id);
 
-    if (!updateNote) {
-      return new Response(JSON.stringify({ message: "Note not found" }), {
-        status: 404,
-      });
+    if (!editJournal) {
+      return new Response(JSON.stringify({ body: "Journal not found", status: 404 }));
     }
+
+    editJournal.text = text;
+    await editJournal.save();
 
     return new Response(JSON.stringify({ status: 200 }));
   } catch (err) {
@@ -48,12 +49,10 @@ export const DELETE = async (req: Request) => {
     const { id } = data;
     await connectToDB();
 
-    const deleteNote = await Note.findByIdAndDelete(id);
+    const deleteJournal = await Journal.findByIdAndDelete(id);
 
-    if (!deleteNote) {
-      return new Response(JSON.stringify({ message: "Note not found" }), {
-        status: 404,
-      });
+    if (!deleteJournal) {
+      return new Response(JSON.stringify({ body: "Journal not found", status: 404 }));
     }
 
     return new Response(JSON.stringify({ status: 200 }));

@@ -1,13 +1,6 @@
 import { connectToDB } from "@/utils/database";
 import Note from "@/models/note";
-
-interface Params {
-  id: string;
-}
-
-interface Context {
-  params: Params;
-}
+import { Context } from "@/types/customTypes";
 
 export const GET = async (req: Request, { params }: Context) => {
   try {

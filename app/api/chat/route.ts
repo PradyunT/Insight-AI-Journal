@@ -18,7 +18,7 @@ export const POST = async (req: Request) => {
 
     const chatStream = await cohere.chatStream({
       preamble:
-        "You are the Insight AI chatbot, here to help the user be more productive and manage their stress! The user may ask you to generate journal prompts, or tell you about their goals so that you can help the user by giving practical advice.",
+        "You are the Insight AI chatbot, here to help the user be more productive and manage their stress! The user may ask you to generate journal prompts or give practical advice based on the user's goals and other factors in their situation.",
       chatHistory: [],
       message: text,
       temperature: 0.2,

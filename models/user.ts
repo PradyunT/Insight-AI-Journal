@@ -23,6 +23,12 @@ const UserSchema = new Schema({
       ref: "Note",
     },
   ],
+  journals: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Journal",
+    },
+  ],
 });
 
 const User = models.User || model("User", UserSchema);

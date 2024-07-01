@@ -6,13 +6,12 @@ import IconButton from "@/components/shared/iconButton";
 import NoteEditDialog from "@/components/shared/noteEditDialog";
 
 const Note = ({ id, number, text, fetchNotes }: { id: string; number: number; text: string; fetchNotes: () => void }) => {
-  const [minimized, setMinimized] = useState(number > 3);
-
+  const [minimized, setMinimized] = useState(true);
   const { toast } = useToast();
 
   const handleDelete = async () => {
     try {
-      const res = await fetch("/api/note/delete", {
+      const res = await fetch("/api/note", {
         method: "DELETE",
         body: JSON.stringify({ id }),
         headers: {
@@ -32,7 +31,7 @@ const Note = ({ id, number, text, fetchNotes }: { id: string; number: number; te
   };
 
   return (
-    <div className={`p-4 rounded-lg bg-blue-200 flex flex-row gap-2 ${minimized ? "w-fit" : ""}`}>
+    <div className={`p-4 rounded-lg border border-gray-200 flex flex-row gap-2 ${minimized ? "w-fit" : ""}`}>
       <div className="flex-col space-y-2">
         <h2 className="font-bold">Note {number}</h2>
         {!minimized && <p>{text}</p>}

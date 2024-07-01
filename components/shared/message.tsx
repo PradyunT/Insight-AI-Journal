@@ -1,6 +1,6 @@
 "use client";
 
-import formatTime from "@/utils/formatTime";
+import { formatMessageTime } from "@/utils/formatTime";
 import { Bot, User, Copy, BookMarked } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useSession } from "next-auth/react";
@@ -28,10 +28,11 @@ const Message = ({ time, role, message }: MessageProps) => {
   const handleSaveNote = async (text: string) => {
     if (!session) {
       toast({ title: "Sign in to save notes", description: "You must be signed in to use journal features" });
+      return;
     }
 
     try {
-      const res = await fetch("/api/note/create", {
+      const res = await fetch("/api/note", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,7 +43,7 @@ const Message = ({ time, role, message }: MessageProps) => {
         }),
       });
 
-      if (res.status == 200) {
+      if (res.ok) {
         toast({ title: "Saved note successfully 📝", description: "See your saved notes in the journal" });
       }
     } catch (error) {
@@ -63,7 +64,7 @@ const Message = ({ time, role, message }: MessageProps) => {
           <strong>{role}:</strong> {message}
         </p>
         <div className="flex items-center">
-          <small>{formatTime(time)}</small>
+          <small>{formatMessageTime(time)}</small>
           <div className="flex-1" />
           <IconButton icon={Copy} onClick={handleCopy} className={role === "USER" ? "hover:bg-blue-300" : "hover:bg-gray-200"} />
           <IconButton

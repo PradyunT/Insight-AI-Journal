@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div className="space-y-4">
       <ConversationProvider>
-        <h1 className="text-2xl font-bold">Chat</h1>
+        <h1 className="h1">Chat</h1>
         <Conversation />
         <ChatInterface />
       </ConversationProvider>

@@ -130,10 +130,10 @@ const ChatInterface = () => {
           </Button>
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger asChild>
+              <TooltipTrigger asChild className="hidden sm:flex">
                 <Button variant={"outline"} type="button" disabled={!session}>
-                  <Link href="/journal" className="flex">
-                    Switch to Journal
+                  <Link href="/journals" className="flex">
+                    Switch to Journals
                     <ArrowRightLeft className="ml-2" size={20} />
                   </Link>
                 </Button>

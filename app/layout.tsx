@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Insight AI Journal",
-  description: "Smart mental health journal powered by AI",
+  description: "AI chatbot and smart mental health journal",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -19,7 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${inter.className} flex flex-col min-h-screen`}>
         <Provider>
           <Nav />
-          <main className="flex-grow mx-auto w-7/12">{children}</main>
+          <main className="flex-grow mx-auto w-10/12 sm:w-3/4 my-6 sm:my-16">{children}</main>
           <Footer />
         </Provider>
         <Toaster />
