@@ -75,7 +75,7 @@ const Nav = () => {
                     Journals
                   </Button>
                 )}
-                {/* {session ? (
+                {session ? (
                   <Link href="/logs" passHref>
                     <Button variant="outline" className="border-none w-full">
                       Logs
@@ -85,7 +85,7 @@ const Nav = () => {
                   <Button variant="outline" className="border-none w-full" onClick={() => handleAccessDenied("Logs")}>
                     Logs
                   </Button>
-                )} */}
+                )}
                 {session ? (
                   <Button className="w-full" onClick={handleSignOut}>
                     Sign Out
@@ -123,7 +123,7 @@ const Nav = () => {
             Journals
           </Button>
         )}
-        {/* {session ? (
+        {session ? (
           <Link href="/logs">
             <Button variant="outline" className="border-none">
               Logs
@@ -133,7 +133,7 @@ const Nav = () => {
           <Button variant="outline" className="border-none" onClick={() => handleAccessDenied("Logs")}>
             Logs
           </Button>
-        )} */}
+        )}
         {session ? (
           <Button onClick={handleSignOut}>Sign Out</Button>
         ) : (

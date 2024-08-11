@@ -29,6 +29,16 @@ const UserSchema = new Schema({
       ref: "Journal",
     },
   ],
+  logType: {
+    type: String,
+    default: "",
+  },
+  logs: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Log",
+    },
+  ],
 });
 
 const User = models.User || model("User", UserSchema);

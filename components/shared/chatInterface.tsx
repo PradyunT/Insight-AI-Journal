@@ -118,16 +118,12 @@ const ChatInterface = () => {
           )}
         />
         <div className="flex flex-row gap-2">
-          <Button type="submit">
-            Send
-            <Send className="ml-2" size={20} />
-          </Button>
-          <InspirationDialog onSelectPrompt={handlePromptSelect} />
-          <div className="flex-1" />
           <Button variant="destructive" onClick={resetConversation} type="button">
             Reset
             <RotateCcw className="ml-2" size={20} />
           </Button>
+          <div className="flex-1" />
+          <InspirationDialog onSelectPrompt={handlePromptSelect} />
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild className="hidden sm:flex">
@@ -143,6 +139,10 @@ const ChatInterface = () => {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
+          <Button type="submit">
+            Send
+            <Send className="ml-2" size={20} />
+          </Button>
         </div>
       </form>
     </Form>

@@ -1,19 +1,24 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { formatJournalDate } from "@/utils/formatTime";
 import { Button } from "../ui/button";
-import { FilePlus } from "lucide-react";
+import { ArrowRightLeft, FilePlus } from "lucide-react";
 import { useJournalContext } from "@/context/JournalContext";
+import Link from "next/link";
 
 const JournalsList = () => {
   const { setMode, setSelectedJournal, journals } = useJournalContext();
-
   return (
     <ScrollArea className="sm:h-72 sm:w-48 rounded-md border">
       <div className="p-4 flex flex-row gap-2 sm:flex-col">
+        <Link href="/">
+          <Button variant={"outline"} type="button">
+            Switch to Chat
+            <ArrowRightLeft className="ml-2" size={20} />
+          </Button>
+        </Link>
         <Button
           variant="outline"
           className="text-sm px-2 rounded-lg hover:bg-gray-200 transition-colors cursor-pointer"

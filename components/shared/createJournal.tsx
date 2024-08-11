@@ -1,6 +1,4 @@
-import Link from "next/link";
 import { Button } from "../ui/button";
-import { ArrowRightLeft } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -9,7 +7,6 @@ import { useSession } from "next-auth/react";
 import { useToast } from "../ui/use-toast";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Textarea } from "../ui/textarea";
-import { Journal } from "@/types/customTypes";
 import { useJournalContext } from "@/context/JournalContext";
 
 const formSchema = z.object({
@@ -66,7 +63,7 @@ const CreateJournal = () => {
           name="text"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Journal</FormLabel>
+              <FormLabel className="font-bold">Journal</FormLabel>
               <FormControl>
                 <Textarea placeholder="Write your journal entry here" {...field} className="h-[200px]" />
               </FormControl>
@@ -76,13 +73,6 @@ const CreateJournal = () => {
         />
         <div className="flex">
           <Button type="submit">Save Journal</Button>
-          <div className="flex-1" />
-          <Link href="/">
-            <Button variant={"outline"} type="button">
-              Switch to Chat
-              <ArrowRightLeft className="ml-2" size={20} />
-            </Button>
-          </Link>
         </div>
       </form>
     </Form>
